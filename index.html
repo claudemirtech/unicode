@@ -3,159 +3,304 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conversor Unicode</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        
-        .text-gradient {
-            background: linear-gradient(to right, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-        }
-        
-        .result-box {
-            transition: all 0.3s ease;
-            min-height: 80px;
-        }
-        
-        .copy-btn {
-            transition: all 0.2s ease;
-        }
-        
-        .copy-btn:hover {
-            transform: scale(1.05);
-        }
-        
-        .copy-btn:active {
-            transform: scale(0.95);
-        }
-        
-        .pulse-animation {
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(102, 126, 234, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0); }
-        }
-    </style>
-</head>
-<body class="gradient-bg min-h-screen flex items-center justify-center p-4">
-    <div class="max-w-4xl w-full">
-        <!-- Cabeçalho -->
-        <div class="text-center mb-10">
-            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
-                <i class="fas fa-code mr-3"></i>Conversor Unicode
-            </h1>
-            <p class="text-gray-200 text-lg max-w-2xl mx-auto">
-                Converta caracteres especiais para sua representação Unicode escape (<code class="bg-gray-800 px-2 py-1 rounded">\uXXXX</code>)
-            </p>
-        </div>
+    <title>AtomicWeb - Conversor Unicode</title>
+    <meta name="description" content="Conversor Unicode: converta caracteres especiais para sua representação Unicode escape (\uXXXX). Ferramenta simples, rápida e prática.">
 
-        <!-- Card Principal -->
-        <div class="glass-effect rounded-2xl shadow-2xl overflow-hidden">
-            <div class="p-6 md:p-8">
+    <!-- Open Graph / Redes Sociais -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://atomicweb.com.br/unicode">
+    <meta property="og:title" content="AtomicWeb - Conversor Unicode">
+    <meta property="og:description" content="Converta caracteres especiais para sua representação Unicode escape (\uXXXX).">
+    <meta property="og:image" content="img/logo192.png">
+
+    <!-- Favicon e Ícones -->
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="img/logo.svg">
+    <link rel="apple-touch-icon" href="img/logo192.png">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-900">
+<div class="flex flex-col md:flex-row min-h-screen">
+    <!-- Topbar para Mobile -->
+    <div class="md:hidden bg-blue-900 text-white px-4 py-3 flex items-center justify-between border-b border-blue-800">
+        <a href="https://atomicweb.com.br/" class="flex items-center">
+            <img src="img/logo.svg" alt="Logo" width="30" height="30" class="mr-2"/>
+            <span class="text-blue-300 font-semibold text-lg">AtomicWeb</span>
+        </a>
+        <button id="mobileMenuBtn" aria-label="Abrir menu de ferramentas" class="p-2 rounded-lg bg-blue-800 hover:bg-blue-700 text-blue-200 hover:text-white transition focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Menu Dropdown em Mobile -->
+    <div id="mobileMenu" class="hidden md:hidden bg-blue-900 text-white px-4 pb-4 border-b border-blue-800 space-y-2">
+        <p class="text-blue-300 text-xs font-semibold uppercase tracking-wider mb-2">Ferramentas:</p>
+        <a class="flex items-center px-4 py-3 bg-blue-800 hover:bg-blue-700 text-white rounded-lg transition"
+           href="https://atomicweb.com.br/base64" target="_blank" rel="noopener noreferrer">
+            <svg class="w-5 h-5 mr-3 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
+            <div>
+                <span class="font-bold text-sm block">Base64</span>
+                <span class="text-blue-200 text-xs">Decodificador</span>
+            </div>
+        </a>
+        <a class="flex items-center px-4 py-3 bg-blue-600 text-white rounded-lg transition ring-2 ring-white/40"
+           href="https://atomicweb.com.br/unicode">
+            <svg class="w-5 h-5 mr-3 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="4 7 4 4 20 4 20 7"></polyline>
+                <line x1="9" y1="20" x2="15" y2="20"></line>
+                <line x1="12" y1="4" x2="12" y2="20"></line>
+            </svg>
+            <div>
+                <span class="font-bold text-sm block">Unicode</span>
+                <span class="text-blue-200 text-xs">Conversor Unicode (Atual)</span>
+            </div>
+        </a>
+        <a class="flex items-center px-4 py-3 bg-blue-800 hover:bg-blue-700 text-white rounded-lg transition"
+           href="https://atomicweb.com.br/contador" target="_blank" rel="noopener noreferrer">
+            <svg class="w-5 h-5 mr-3 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+                <line x1="8" y1="6" x2="16" y2="6"></line>
+                <line x1="16" y1="14" x2="16" y2="18"></line>
+                <path d="M16 10h.01"></path>
+                <path d="M12 10h.01"></path>
+                <path d="M8 10h.01"></path>
+                <path d="M12 14h.01"></path>
+                <path d="M8 14h.01"></path>
+                <path d="M12 18h.01"></path>
+                <path d="M8 18h.01"></path>
+            </svg>
+            <div>
+                <span class="font-bold text-sm block">Contador</span>
+                <span class="text-blue-200 text-xs">Contador Simples</span>
+            </div>
+        </a>
+        <a class="flex items-center justify-center px-4 py-2 text-blue-300 hover:text-white text-xs border-t border-blue-800 pt-3"
+           href="https://atomicweb.com.br/">
+            Voltar ao Hub AtomicWeb
+        </a>
+    </div>
+
+    <!-- Menu Lateral Esquerdo - Desktop -->
+    <div class="hidden md:block w-64 bg-blue-900 text-white p-6 shrink-0 min-h-screen">
+        <div class="h-full flex flex-col">
+            <!-- Cabeçalho do Menu -->
+            <div class="mb-8 md:mb-12 flex items-center">
+                <a href="https://atomicweb.com.br/" class="flex items-center hover:opacity-90 transition">
+                    <img src="img/logo.svg" alt="Logo" width="36" height="36" class="mr-2"/>
+                    <p class="text-blue-300 text-lg font-semibold">
+                        AtomicWeb
+                    </p>
+                </a>
+            </div>
+
+            <!-- Botões do Menu -->
+            <div class="flex-1 flex flex-col justify-center space-y-6">
+                <a class="block px-6 py-5 bg-blue-700 hover:bg-blue-600 text-white rounded-xl transition duration-200 shadow-lg"
+                   href="https://atomicweb.com.br/base64"
+                   target="_blank" rel="noopener noreferrer">
+                    <div class="flex items-center">
+                        <svg class="w-7 h-7 mr-4 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 18 22 12 16 6"></polyline>
+                            <polyline points="8 6 2 12 8 18"></polyline>
+                        </svg>
+                        <div>
+                            <h3 class="font-bold text-lg">Base64</h3>
+                            <p class="text-blue-200 text-sm mt-1">Decodificador</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a class="block px-6 py-5 bg-blue-600 ring-2 ring-white/60 text-white rounded-xl transition duration-200 shadow-lg"
+                   href="https://atomicweb.com.br/unicode">
+                    <div class="flex items-center">
+                        <svg class="w-7 h-7 mr-4 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="4 7 4 4 20 4 20 7"></polyline>
+                            <line x1="9" y1="20" x2="15" y2="20"></line>
+                            <line x1="12" y1="4" x2="12" y2="20"></line>
+                        </svg>
+                        <div>
+                            <h3 class="font-bold text-lg">Unicode</h3>
+                            <p class="text-blue-200 text-sm mt-1">Conversor Unicode</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a class="block px-6 py-5 bg-blue-700 hover:bg-blue-600 text-white rounded-xl transition duration-200 shadow-lg"
+                   href="https://atomicweb.com.br/contador"
+                   target="_blank" rel="noopener noreferrer">
+                    <div class="flex items-center">
+                        <svg class="w-7 h-7 mr-4 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+                            <line x1="8" y1="6" x2="16" y2="6"></line>
+                            <line x1="16" y1="14" x2="16" y2="18"></line>
+                            <path d="M16 10h.01"></path>
+                            <path d="M12 10h.01"></path>
+                            <path d="M8 10h.01"></path>
+                            <path d="M12 14h.01"></path>
+                            <path d="M8 14h.01"></path>
+                            <path d="M12 18h.01"></path>
+                            <path d="M8 18h.01"></path>
+                        </svg>
+                        <div>
+                            <h3 class="font-bold text-lg">Contador</h3>
+                            <p class="text-blue-200 text-sm mt-1">Contador Simples</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Rodapé do Menu -->
+            <div class="mt-8 pt-6 border-t border-blue-700">
+                <a href="https://atomicweb.com.br/" class="text-center text-blue-300 hover:text-white text-sm flex items-center justify-center transition">
+                    <svg class="w-4 h-4 mr-2 text-blue-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <span>Hub AtomicWeb</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="flex-1 p-4 md:p-8">
+        <div class="container mx-auto max-w-4xl">
+            <!-- Cabeçalho -->
+            <div class="text-center mb-8">
+                <h1 class="text-3xl md:text-4xl font-bold text-center text-blue-500">Conversor Unicode</h1>
+                <p class="mt-4 text-center text-lg text-gray-600">
+                    Converta caracteres especiais para sua representação Unicode escape (<code class="bg-blue-50 text-blue-800 px-2 py-0.5 rounded border border-blue-200">\uXXXX</code>)
+                </p>
+            </div>
+
+            <!-- Card Principal -->
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-100">
                 <!-- Entrada -->
-                <div class="mb-8">
-                    <label for="entrada" class="block text-white font-semibold text-lg mb-3">
-                        <i class="fas fa-keyboard mr-2"></i>Texto de Entrada
+                <div class="mb-6">
+                    <label for="entrada" class="flex items-center text-gray-800 font-semibold text-lg mb-2">
+                        <svg class="w-5 h-5 text-blue-600 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
+                            <line x1="6" y1="8" x2="6" y2="8"></line>
+                            <line x1="10" y1="8" x2="10" y2="8"></line>
+                            <line x1="14" y1="8" x2="14" y2="8"></line>
+                            <line x1="18" y1="8" x2="18" y2="8"></line>
+                            <line x1="6" y1="12" x2="6" y2="12"></line>
+                            <line x1="10" y1="12" x2="10" y2="12"></line>
+                            <line x1="14" y1="12" x2="14" y2="12"></line>
+                            <line x1="18" y1="12" x2="18" y2="12"></line>
+                            <line x1="7" y1="16" x2="17" y2="16"></line>
+                        </svg>
+                        Texto de Entrada
                     </label>
                     <div class="relative">
                         <textarea 
                             id="entrada" 
                             rows="3"
-                            class="w-full p-5 bg-gray-800/70 border-2 border-gray-700 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all resize-none"
+                            class="w-full p-4 bg-gray-50 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition-all resize-none"
                             placeholder="Digite seu texto aqui (ex: Usuários, café, maçã, etc.)"
                         >Usuários</textarea>
-                        <div class="absolute bottom-3 right-3 text-gray-400 text-sm">
+                        <div class="absolute bottom-3 right-3 text-gray-400 text-xs">
                             <span id="charCount">0</span> caracteres
                         </div>
                     </div>
                     
                     <!-- Exemplos rápidos -->
-                    <div class="mt-3 flex flex-wrap gap-2">
-                        <span class="text-gray-300 text-sm mr-2">Exemplos:</span>
-                        <button onclick="preencherExemplo('Usuários')" class="px-3 py-1 bg-gray-800 hover:bg-gray-700 text-gray-200 rounded-full text-sm transition-colors">Usuários</button>
-                        <button onclick="preencherExemplo('café')" class="px-3 py-1 bg-gray-800 hover:bg-gray-700 text-gray-200 rounded-full text-sm transition-colors">café</button>
-                        <button onclick="preencherExemplo('maçã')" class="px-3 py-1 bg-gray-800 hover:bg-gray-700 text-gray-200 rounded-full text-sm transition-colors">maçã</button>
-                        <button onclick="preencherExemplo('canção')" class="px-3 py-1 bg-gray-800 hover:bg-gray-700 text-gray-200 rounded-full text-sm transition-colors">canção</button>
-                        <button onclick="preencherExemplo('😀🎉❤️')" class="px-3 py-1 bg-gray-800 hover:bg-gray-700 text-gray-200 rounded-full text-sm transition-colors">😀🎉❤️</button>
+                    <div class="mt-3 flex flex-wrap items-center gap-2">
+                        <span class="text-gray-500 text-sm mr-1">Exemplos:</span>
+                        <button type="button" onclick="preencherExemplo('Usuários')" class="px-3 py-1 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-full text-xs font-medium transition">Usuários</button>
+                        <button type="button" onclick="preencherExemplo('café')" class="px-3 py-1 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-full text-xs font-medium transition">café</button>
+                        <button type="button" onclick="preencherExemplo('maçã')" class="px-3 py-1 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-full text-xs font-medium transition">maçã</button>
+                        <button type="button" onclick="preencherExemplo('canção')" class="px-3 py-1 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-full text-xs font-medium transition">canção</button>
+                        <button type="button" onclick="preencherExemplo('😀🎉❤️')" class="px-3 py-1 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-full text-xs font-medium transition">😀🎉❤️</button>
                     </div>
                 </div>
 
                 <!-- Controles -->
-                <div class="mb-8">
-                    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
+                <div class="mb-6">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
                         <div>
-                            <h3 class="text-white font-semibold mb-2">
-                                <i class="fas fa-sliders-h mr-2"></i>Opções de Conversão
+                            <h3 class="text-gray-800 font-semibold mb-2 flex items-center text-sm md:text-base">
+                                <svg class="w-4 h-4 text-blue-600 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="4" y1="21" x2="4" y2="14"></line>
+                                    <line x1="4" y1="10" x2="4" y2="3"></line>
+                                    <line x1="12" y1="21" x2="12" y2="12"></line>
+                                    <line x1="12" y1="8" x2="12" y2="3"></line>
+                                    <line x1="20" y1="21" x2="20" y2="16"></line>
+                                    <line x1="20" y1="12" x2="20" y2="3"></line>
+                                    <line x1="1" y1="14" x2="7" y2="14"></line>
+                                    <line x1="9" y1="8" x2="15" y2="8"></line>
+                                    <line x1="17" y1="16" x2="23" y2="16"></line>
+                                </svg>
+                                Opções de Conversão
                             </h3>
-                            <div class="flex items-center space-x-4">
-                                <label class="flex items-center text-gray-200">
-                                    <input type="checkbox" id="manterAscii" checked class="mr-2 h-5 w-5 text-purple-500 rounded focus:ring-purple-400">
+                            <div class="flex flex-wrap items-center gap-4">
+                                <label class="flex items-center text-gray-700 text-sm cursor-pointer">
+                                    <input type="checkbox" id="manterAscii" checked class="mr-2 h-4 w-4 text-blue-600 rounded focus:ring-blue-500 border-gray-300">
                                     Manter caracteres ASCII
                                 </label>
-                                <label class="flex items-center text-gray-200">
-                                    <input type="checkbox" id="maiusculas" class="mr-2 h-5 w-5 text-purple-500 rounded focus:ring-purple-400">
+                                <label class="flex items-center text-gray-700 text-sm cursor-pointer">
+                                    <input type="checkbox" id="maiusculas" class="mr-2 h-4 w-4 text-blue-600 rounded focus:ring-blue-500 border-gray-300">
                                     Letras maiúsculas no código
                                 </label>
                             </div>
                         </div>
                         
                         <button 
+                            type="button"
                             onclick="converter()" 
-                            class="btn-primary text-white font-semibold py-3 px-8 rounded-xl flex items-center justify-center shadow-lg pulse-animation"
+                            class="w-full sm:w-auto px-6 py-3 bg-blue-700 hover:bg-blue-600 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition duration-200 flex items-center justify-center"
                         >
-                            <i class="fas fa-sync-alt mr-3"></i> Converter para Unicode
+                            <svg class="w-5 h-5 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="23 4 23 10 17 10"></polyline>
+                                <polyline points="1 20 1 14 7 14"></polyline>
+                                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                            </svg>
+                            Converter para Unicode
                         </button>
                     </div>
                     
                     <!-- Botão extra para limpar -->
                     <div class="flex justify-end">
                         <button 
+                            type="button"
                             onclick="limparCampos()" 
-                            class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-gray-200 rounded-lg flex items-center transition-colors"
+                            class="px-3.5 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 border border-gray-200 rounded-lg flex items-center text-sm font-medium transition-colors"
                         >
-                            <i class="fas fa-eraser mr-2"></i> Limpar
+                            <svg class="w-4 h-4 mr-1.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                            Limpar
                         </button>
                     </div>
                 </div>
 
                 <!-- Resultado -->
                 <div>
-                    <div class="flex justify-between items-center mb-3">
-                        <label class="block text-white font-semibold text-lg">
-                            <i class="fas fa-code mr-2"></i>Resultado Unicode
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="flex items-center text-gray-800 font-semibold text-lg">
+                            <svg class="w-5 h-5 text-blue-600 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="16 18 22 12 16 6"></polyline>
+                                <polyline points="8 6 2 12 8 18"></polyline>
+                            </svg>
+                            Resultado Unicode
                         </label>
-                        <div class="text-gray-300 text-sm">
-                            <i class="fas fa-info-circle mr-1"></i>
+                        <div class="text-gray-500 text-xs flex items-center">
+                            <svg class="w-4 h-4 mr-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
                             Clique no código para copiar
                         </div>
                     </div>
@@ -163,242 +308,270 @@
                     <div class="relative">
                         <div 
                             id="resultado" 
-                            class="result-box w-full p-5 bg-gray-900 border-2 border-gray-800 rounded-xl text-green-400 font-mono text-lg whitespace-pre-wrap break-all min-h-[100px] cursor-pointer hover:bg-gray-800/80 transition-colors"
+                            class="w-full p-5 bg-gray-900 border border-gray-800 rounded-xl text-emerald-400 font-mono text-base md:text-lg whitespace-pre-wrap break-all min-h-[100px] cursor-pointer hover:bg-gray-850 transition-colors"
                             onclick="copiarResultado()"
                             title="Clique para copiar"
-                        >
-                            Aguardando conversão...
-                        </div>
+                        >Aguardando conversão...</div>
                         
                         <button 
                             id="copyBtn"
+                            type="button"
                             onclick="copiarResultado()" 
-                            class="copy-btn absolute top-4 right-4 bg-gray-800 hover:bg-gray-700 text-gray-300 p-2 rounded-lg transition-all"
+                            class="absolute top-3 right-3 bg-gray-800 hover:bg-gray-700 text-gray-300 p-2.5 rounded-lg border border-gray-700 transition"
                             title="Copiar resultado"
                         >
-                            <i class="fas fa-copy"></i>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
                         </button>
                         
-                        <div id="copyFeedback" class="absolute bottom-4 right-4 hidden">
-                            <span class="bg-green-500 text-white px-3 py-1 rounded-lg text-sm font-medium">
-                                <i class="fas fa-check mr-1"></i> Copiado!
+                        <div id="copyFeedback" class="absolute bottom-3 right-3 hidden">
+                            <span class="bg-emerald-600 text-white px-3 py-1 rounded-lg text-sm font-medium flex items-center shadow">
+                                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                Copiado!
                             </span>
                         </div>
                     </div>
                     
                     <!-- Informações adicionais -->
-                    <div id="infoAdicional" class="mt-4 p-4 bg-gray-800/50 rounded-xl hidden">
-                        <h4 class="text-white font-semibold mb-2">
-                            <i class="fas fa-info-circle mr-2"></i>Informações Detalhadas
+                    <div id="infoAdicional" class="mt-5 p-4 md:p-5 bg-blue-50/70 border border-blue-200 rounded-xl hidden">
+                        <h4 class="text-blue-900 font-semibold mb-3 flex items-center text-sm md:text-base">
+                            <svg class="w-4 h-4 text-blue-600 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            Informações Detalhadas
                         </h4>
-                        <div id="infoConteudo" class="text-gray-300 text-sm"></div>
+                        <div id="infoConteudo"></div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Rodapé do Card -->
-            <div class="px-8 py-4 bg-gray-900/50 border-t border-gray-800">
-                <div class="flex flex-col md:flex-row justify-between items-center">
-                    <div class="text-gray-400 text-sm mb-2 md:mb-0">
-                        <i class="fas fa-lightbulb mr-1"></i>
-                        <strong>Dica:</strong> Unicode escape é usado em JSON e strings JavaScript
+
+                <!-- Rodapé informativo -->
+                <div class="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-200 flex flex-col sm:flex-row items-center justify-between text-sm text-blue-900">
+                    <div class="flex items-center mb-3 sm:mb-0">
+                        <svg class="w-5 h-5 text-blue-600 mr-2.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 18h6"></path>
+                            <path d="M10 22h4"></path>
+                            <path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7z"></path>
+                        </svg>
+                        <span><strong>Dica:</strong> Unicode escape é usado em JSON e strings</span>
                     </div>
-                    <div class="text-gray-400 text-sm">
-                        Feito com <i class="fas fa-heart text-red-400 mx-1"></i> usando Tailwind CSS
-                    </div>
+                    <a href="https://github.com/claudemirtech" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-blue-700 hover:text-blue-900 font-medium">
+                        <svg class="w-4 h-4 mr-1.5 fill-current" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                        </svg>
+                        GitHub
+                    </a>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        // Atualizar contador de caracteres
-        document.getElementById('entrada').addEventListener('input', function() {
-            const charCount = this.value.length;
-            document.getElementById('charCount').textContent = charCount;
-            
-            // Atualizar cor do contador
-            const charCountElement = document.getElementById('charCount');
-            if (charCount > 100) {
-                charCountElement.classList.add('text-yellow-400');
-                charCountElement.classList.remove('text-gray-400');
-            } else {
-                charCountElement.classList.remove('text-yellow-400');
-                charCountElement.classList.add('text-gray-400');
-            }
+<script>
+    // Menu mobile toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
         });
+    }
+
+    // Atualizar contador de caracteres
+    const entradaElement = document.getElementById('entrada');
+    const charCountElement = document.getElementById('charCount');
+
+    entradaElement.addEventListener('input', function() {
+        const charCount = this.value.length;
+        charCountElement.textContent = charCount;
         
-        // Inicializar contador
-        document.getElementById('entrada').dispatchEvent(new Event('input'));
-
-        // Função para preencher exemplos
-        function preencherExemplo(texto) {
-            document.getElementById('entrada').value = texto;
-            document.getElementById('entrada').dispatchEvent(new Event('input'));
-            converter();
+        if (charCount > 100) {
+            charCountElement.classList.add('text-amber-600', 'font-medium');
+            charCountElement.classList.remove('text-gray-400');
+        } else {
+            charCountElement.classList.remove('text-amber-600', 'font-medium');
+            charCountElement.classList.add('text-gray-400');
         }
+    });
+    
+    // Inicializar contador
+    entradaElement.dispatchEvent(new Event('input'));
 
-        // Função principal de conversão
-        function converter() {
-            const entrada = document.getElementById('entrada').value;
-            const manterAscii = document.getElementById('manterAscii').checked;
-            const maiusculas = document.getElementById('maiusculas').checked;
-            
-            let resultado;
-            
-            if (manterAscii) {
-                // Converter apenas caracteres não-ASCII
-                resultado = entrada.replace(/[^\x00-\x7F]/g, function(char) {
-                    let hex = char.charCodeAt(0).toString(16).padStart(4, '0');
-                    if (maiusculas) hex = hex.toUpperCase();
-                    return '\\u' + hex;
-                });
-            } else {
-                // Converter todos os caracteres
-                resultado = Array.from(entrada).map(function(char) {
-                    const codigo = char.charCodeAt(0);
-                    if (codigo <= 32) return char; // Manter espaços e quebras de linha
-                    let hex = codigo.toString(16).padStart(4, '0');
-                    if (maiusculas) hex = hex.toUpperCase();
-                    return '\\u' + hex;
-                }).join('');
-            }
-            
-            // Exibir resultado
-            const resultadoElement = document.getElementById('resultado');
-            resultadoElement.textContent = resultado || "(vazio)";
-            resultadoElement.classList.remove('text-green-400', 'text-red-400');
-            resultadoElement.classList.add(resultado ? 'text-green-400' : 'text-red-400');
-            
-            // Mostrar informações detalhadas
-            mostrarInformacoes(entrada, resultado);
+    // Função para preencher exemplos
+    function preencherExemplo(texto) {
+        entradaElement.value = texto;
+        entradaElement.dispatchEvent(new Event('input'));
+        converter();
+    }
+
+    // Função principal de conversão
+    function converter() {
+        const entrada = entradaElement.value;
+        const manterAscii = document.getElementById('manterAscii').checked;
+        const maiusculas = document.getElementById('maiusculas').checked;
+        
+        let resultado;
+        
+        if (manterAscii) {
+            // Converter apenas caracteres não-ASCII
+            resultado = entrada.replace(/[^\x00-\x7F]/g, function(char) {
+                let hex = char.charCodeAt(0).toString(16).padStart(4, '0');
+                if (maiusculas) hex = hex.toUpperCase();
+                return '\\u' + hex;
+            });
+        } else {
+            // Converter todos os caracteres
+            resultado = Array.from(entrada).map(function(char) {
+                const codigo = char.charCodeAt(0);
+                if (codigo <= 32) return char; // Manter espaços e quebras de linha
+                let hex = codigo.toString(16).padStart(4, '0');
+                if (maiusculas) hex = hex.toUpperCase();
+                return '\\u' + hex;
+            }).join('');
         }
+        
+        // Exibir resultado
+        const resultadoElement = document.getElementById('resultado');
+        resultadoElement.textContent = resultado || "(vazio)";
+        resultadoElement.classList.remove('text-emerald-400', 'text-red-400');
+        resultadoElement.classList.add(resultado ? 'text-emerald-400' : 'text-red-400');
+        
+        // Mostrar informações detalhadas
+        mostrarInformacoes(entrada, resultado);
+    }
 
-        // Função para mostrar informações detalhadas
-        function mostrarInformacoes(entrada, resultadoUnicode) {
-            const infoElement = document.getElementById('infoAdicional');
-            const conteudoElement = document.getElementById('infoConteudo');
+    // Função para mostrar informações detalhadas
+    function mostrarInformacoes(entrada, resultadoUnicode) {
+        const infoElement = document.getElementById('infoAdicional');
+        const conteudoElement = document.getElementById('infoConteudo');
+        
+        if (!entrada) {
+            infoElement.classList.add('hidden');
+            return;
+        }
+        
+        // Contar caracteres especiais
+        const caracteresEspeciais = entrada.match(/[^\x00-\x7F]/g) || [];
+        
+        // Criar cards de detalhes
+        let html = `
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
+                <div class="bg-white p-3.5 rounded-lg border border-blue-100 shadow-sm">
+                    <div class="text-gray-500 text-xs font-semibold uppercase tracking-wider">Caracteres totais</div>
+                    <div class="text-xl font-bold text-gray-800 mt-1">${entrada.length}</div>
+                </div>
+                <div class="bg-white p-3.5 rounded-lg border border-blue-100 shadow-sm">
+                    <div class="text-gray-500 text-xs font-semibold uppercase tracking-wider">Caracteres especiais</div>
+                    <div class="text-xl font-bold text-blue-600 mt-1">${caracteresEspeciais.length}</div>
+                </div>
+                <div class="bg-white p-3.5 rounded-lg border border-blue-100 shadow-sm">
+                    <div class="text-gray-500 text-xs font-semibold uppercase tracking-wider">Tamanho do resultado</div>
+                    <div class="text-xl font-bold text-blue-700 mt-1">${resultadoUnicode.length}</div>
+                </div>
+            </div>
+        `;
+        
+        // Se houver caracteres especiais, mostrar tabela
+        if (caracteresEspeciais.length > 0) {
+            html += `
+                <div class="mt-4">
+                    <div class="text-gray-700 font-medium text-sm mb-2">Detalhes dos caracteres convertidos:</div>
+                    <div class="overflow-x-auto bg-white rounded-lg border border-blue-100 shadow-sm">
+                        <table class="w-full text-left text-sm">
+                            <thead>
+                                <tr class="border-b border-blue-100 bg-blue-50/50 text-blue-900 font-semibold">
+                                    <th class="py-2 px-3">Caractere</th>
+                                    <th class="py-2 px-3">Código Unicode</th>
+                                    <th class="py-2 px-3">Escape</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+            `;
             
-            if (!entrada) {
-                infoElement.classList.add('hidden');
-                return;
-            }
+            // Remover duplicados
+            const caracteresUnicos = [...new Set(caracteresEspeciais)];
             
-            // Contar caracteres especiais
-            const caracteresEspeciais = entrada.match(/[^\x00-\x7F]/g) || [];
+            caracteresUnicos.forEach(char => {
+                const code = char.charCodeAt(0);
+                const hex = code.toString(16).padStart(4, '0').toUpperCase();
+                html += `
+                    <tr class="border-b border-gray-100 hover:bg-blue-50/40 transition">
+                        <td class="py-2 px-3 text-lg font-medium text-gray-800">${char}</td>
+                        <td class="py-2 px-3 font-mono text-gray-600">U+${hex}</td>
+                        <td class="py-2 px-3 font-mono text-blue-600 font-semibold">\\u${hex}</td>
+                    </tr>
+                `;
+            });
             
-            // Criar tabela de detalhes
-            let html = `
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-gray-900/50 p-3 rounded-lg">
-                        <div class="text-gray-400">Caracteres totais</div>
-                        <div class="text-xl font-bold text-white">${entrada.length}</div>
-                    </div>
-                    <div class="bg-gray-900/50 p-3 rounded-lg">
-                        <div class="text-gray-400">Caracteres especiais</div>
-                        <div class="text-xl font-bold text-yellow-400">${caracteresEspeciais.length}</div>
-                    </div>
-                    <div class="bg-gray-900/50 p-3 rounded-lg">
-                        <div class="text-gray-400">Tamanho do resultado</div>
-                        <div class="text-xl font-bold text-blue-400">${resultadoUnicode.length}</div>
+            html += `
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             `;
-            
-            // Se houver caracteres especiais, mostrar detalhes
-            if (caracteresEspeciais.length > 0) {
-                html += `
-                    <div class="mt-4">
-                        <div class="text-gray-400 mb-2">Detalhes dos caracteres convertidos:</div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left">
-                                <thead>
-                                    <tr class="border-b border-gray-700">
-                                        <th class="py-2 text-gray-300">Caractere</th>
-                                        <th class="py-2 text-gray-300">Código Unicode</th>
-                                        <th class="py-2 text-gray-300">Escape</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                `;
-                
-                // Remover duplicados
-                const caracteresUnicos = [...new Set(caracteresEspeciais)];
-                
-                caracteresUnicos.forEach(char => {
-                    const code = char.charCodeAt(0);
-                    const hex = code.toString(16).padStart(4, '0').toUpperCase();
-                    html += `
-                        <tr class="border-b border-gray-800/50 hover:bg-gray-800/30">
-                            <td class="py-2 text-xl">${char}</td>
-                            <td class="py-2 font-mono">U+${hex}</td>
-                            <td class="py-2 font-mono text-green-400">\\u${hex}</td>
-                        </tr>
-                    `;
-                });
-                
-                html += `
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                `;
-            }
-            
-            conteudoElement.innerHTML = html;
-            infoElement.classList.remove('hidden');
         }
-
-        // Função para copiar resultado
-        function copiarResultado() {
-            const resultado = document.getElementById('resultado').textContent;
-            
-            if (resultado === "Aguardando conversão..." || resultado === "(vazio)") {
-                return;
-            }
-            
-            // Usar a API Clipboard
-            navigator.clipboard.writeText(resultado).then(() => {
-                // Feedback visual
-                const copyBtn = document.getElementById('copyBtn');
-                const copyFeedback = document.getElementById('copyFeedback');
-                
-                copyBtn.innerHTML = '<i class="fas fa-check"></i>';
-                copyBtn.classList.remove('bg-gray-800', 'hover:bg-gray-700');
-                copyBtn.classList.add('bg-green-600');
-                
-                copyFeedback.classList.remove('hidden');
-                
-                setTimeout(() => {
-                    copyBtn.innerHTML = '<i class="fas fa-copy"></i>';
-                    copyBtn.classList.remove('bg-green-600');
-                    copyBtn.classList.add('bg-gray-800', 'hover:bg-gray-700');
-                    copyFeedback.classList.add('hidden');
-                }, 2000);
-            });
-        }
-
-        // Função para limpar campos
-        function limparCampos() {
-            document.getElementById('entrada').value = '';
-            document.getElementById('resultado').textContent = 'Aguardando conversão...';
-            document.getElementById('resultado').classList.remove('text-green-400', 'text-red-400');
-            document.getElementById('resultado').classList.add('text-green-400');
-            document.getElementById('infoAdicional').classList.add('hidden');
-            document.getElementById('entrada').dispatchEvent(new Event('input'));
-        }
-
-        // Converter automaticamente ao carregar a página
-        document.addEventListener('DOMContentLoaded', function() {
-            converter();
-        });
         
-        // Permitir conversão com Enter (Ctrl+Enter)
-        document.getElementById('entrada').addEventListener('keydown', function(e) {
-            if (e.ctrlKey && e.key === 'Enter') {
-                converter();
-            }
+        conteudoElement.innerHTML = html;
+        infoElement.classList.remove('hidden');
+    }
+
+    // SVGs para botão copiar
+    const copyIconSvg = `<svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
+    const checkIconSvg = `<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+
+    // Função para copiar resultado
+    function copiarResultado() {
+        const resultado = document.getElementById('resultado').textContent;
+        
+        if (resultado === "Aguardando conversão..." || resultado === "(vazio)") {
+            return;
+        }
+        
+        navigator.clipboard.writeText(resultado).then(() => {
+            const copyBtn = document.getElementById('copyBtn');
+            const copyFeedback = document.getElementById('copyFeedback');
+            
+            copyBtn.innerHTML = checkIconSvg;
+            copyBtn.classList.remove('bg-gray-800', 'hover:bg-gray-700');
+            copyBtn.classList.add('bg-emerald-600');
+            copyFeedback.classList.remove('hidden');
+            
+            setTimeout(() => {
+                copyBtn.innerHTML = copyIconSvg;
+                copyBtn.classList.remove('bg-emerald-600');
+                copyBtn.classList.add('bg-gray-800', 'hover:bg-gray-700');
+                copyFeedback.classList.add('hidden');
+            }, 2000);
         });
-    </script>
+    }
+
+    // Função para limpar campos
+    function limparCampos() {
+        entradaElement.value = '';
+        const resultadoElement = document.getElementById('resultado');
+        resultadoElement.textContent = 'Aguardando conversão...';
+        resultadoElement.classList.remove('text-emerald-400', 'text-red-400');
+        resultadoElement.classList.add('text-emerald-400');
+        document.getElementById('infoAdicional').classList.add('hidden');
+        entradaElement.dispatchEvent(new Event('input'));
+    }
+
+    // Converter automaticamente ao carregar a página
+    document.addEventListener('DOMContentLoaded', function() {
+        converter();
+    });
+    
+    // Permitir conversão com Enter (Ctrl+Enter)
+    entradaElement.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && e.key === 'Enter') {
+            converter();
+        }
+    });
+</script>
 </body>
 </html>
